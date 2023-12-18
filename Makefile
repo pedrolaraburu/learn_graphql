@@ -19,6 +19,7 @@ endif
 
 start:
 	docker-compose -f docker-compose.yml start
+	@echo "🚀 Server started at http://localhost:4000/"
 
 stop:
 	docker-compose -f docker-compose.yml stop 

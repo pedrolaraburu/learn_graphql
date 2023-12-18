@@ -1,17 +1,5 @@
-import {ApolloServer, gql} from 'apollo-server';
-
-
-const typeDefs = gql`
-  type Query {
-    hello: String
-  }
-`;
-
-const resolvers = {
-  Query: {
-    hello: () => 'Hello world!'
-  }
-};
+import {ApolloServer} from 'apollo-server';
+import { typeDefs, resolvers } from './graphql/mergeSchemas';
 
 const server = new ApolloServer({typeDefs, resolvers});
 

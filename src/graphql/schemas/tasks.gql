@@ -1,5 +1,6 @@
+directive @auth on FIELD_DEFINITION | OBJECT
 type Task {
-    id: ID!
+    id: Int!
     title: String!
     description: String!
     status: Boolean!

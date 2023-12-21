@@ -1,18 +1,22 @@
+directive @auth on FIELD_DEFINITION | OBJECT
 type User {
-  id: ID!
-  email: String!
-  name: String
-  password: String!
-  createdAt: String!
-  updatedAt: String!
-  tasks: [Task]
+  	id: Int!
+  	email: String!
+  	name: String
+	password: String!
+	createdAt: String!
+	updatedAt: String!
+	tasks: [Task]
 }
 
 type Query {
-    users: [User!]!
-    user(id: ID!): User
+    users: [User!]! @auth
+    user(id: Int!): User @auth
 }
 
 type Mutation {
-  createUser(email: String!, name: String!, password: String!): User!
+	createUser(email: String!, name: String!, password: String!): User! @auth
+	updateUser(id: Int!, email: String, name: String, password: String): User! @auth
+  	deleteUser(id: Int!): Boolean! @auth
+	login(email: String!, password: String!): String!
 }

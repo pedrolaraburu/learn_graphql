@@ -2,20 +2,20 @@ directive @auth on FIELD_DEFINITION | OBJECT
 type Task {
     id: Int!
     title: String!
-    description: String!
-    status: Boolean!
+    completed: Boolean!
     createdAt: String!
     updatedAt: String!
     user: User!
 }
 
 type Query {
-    getTasks: [Task!]!
-    getTask(id: ID!): Task!
+    getTasks: [Task!]! @auth
+    getTask(id: Int!): Task! @auth
+    getTasksByUser(userId: Int!): [Task!]! @auth
 }
 
 type Mutation {
-    createTask(title: String!, description: String!): Task!
-    updateTask(id: ID!, title: String, description: String, status: Boolean): Task!
-    deleteTask(id: ID!): Task!
+    createTask(title: String!, userId: Int!): Task! @auth
+    updateTask(id: Int!, title: String, completed: Boolean): Task! @auth
+    deleteTask(id: Int!): Boolean! @auth
 }

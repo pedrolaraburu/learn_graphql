@@ -7,24 +7,21 @@ const userService = new UserService();
 export default {
     Query : {
         users: () => prisma.user.findMany(),
-        user: async (_: any, { id }: any) => {
-            const user = prisma.user.findUnique({ where: { id } });
-            if (!user) {
-                throw new Error('User not found');
-            }
+        user: (_: null, args: { id: number; }) => {
+            return userService.getUserById(args);
         },
     }, 
     Mutation: {
-        createUser: (_: any, args: any) => {
+        createUser: (_: null, args: {name: string, email: string, password: string}) => {
             return userService.createUser(args);
         },
-        updateUser: (_: any, args: any) => {
+        updateUser: (_: null, args: {id: number, name: string, email: string, password: string}) => {
             return userService.updateUser(args);
         },
-        deleteUser: (_: any, args: any) => {
+        deleteUser: (_: null, args: {id: number}) => {
             return userService.deleteUser(args);
         },
-        login(_ : any, args: any) {
+        login(_ : null, args: {email: string, password: string}) {
             return userService.login(args);
         }
     }

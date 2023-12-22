@@ -7,19 +7,20 @@ default:
 
 build:
 ifeq ("$(wildcard .env)","") 
+	@SECRET_KEY="$$(openssl rand -hex 32)"; \
 	if [ -f .env.example ]; then \
-		cp .env.example .env; \
-	else \
-		echo "#####____________________________________________________________________.env.example file not found"; \
-		exit 1; \
+		echo "\nSECRET_KEY = '$$SECRET_KEY'" >> .env.example; \
+		echo "Secret key added to .env.example"; \
 	fi
+	cp .env.example .env
 	@echo "#####____________________________________________________________________New .env file created" 
 endif
 	docker-compose -f docker-compose.yml --env-file=.env up -d --build
+	@echo "🚀 Server started at http://localhost:4000/graphql"
 
 start:
 	docker-compose -f docker-compose.yml start
-	@echo "🚀 Server started at http://localhost:4000/"
+	@echo "🚀 Server started at http://localhost:4000/graphql"
 
 stop:
 	docker-compose -f docker-compose.yml stop 

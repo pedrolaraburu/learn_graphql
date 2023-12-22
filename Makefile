@@ -26,3 +26,10 @@ stop:
 
 delete: 
 	docker-compose -f docker-compose.yml down 
+
+# This command is used to start the project locally (I was commenting the node.js part of the docker-compose.yml file)
+# Will only work if you just have the DB container on the docker-compose.yml file
+start-local:
+	docker-compose -f docker-compose.yml --env-file=.env up -d --build
+	npx prisma migrate dev --name init --schema=./src/prisma/schema.prisma
+	yarn dev

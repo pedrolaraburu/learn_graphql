@@ -9,22 +9,19 @@ const jwtConfig: SignOptions = {
 
 const SECRET = process.env.SECRET_KEY as string;
 
-export default class JwtService {
+export const generateToken = (args: { id: number; email: string;}) => {
+    return sign(args, SECRET, jwtConfig);
+};
 
-    public generateToken(args: { id: number; email: string;}) {
-        return sign(args, SECRET, jwtConfig);
-    };
+export const verifyToken = async (token: string) => {
+    return verify(token, SECRET, jwtConfig);
+};
 
-    public static async verifyToken(token: string) {
-        return verify(token, SECRET, jwtConfig);
-    };
+export const decodeToken = (token: string) => {
+    return decode(token);
+};
 
-    public decodeToken(token: string) {
-        return decode(token);
-    };
-
-    public async getUserId(token: string) {
-        const id = this.decodeToken(token);
-        return id;
-    }
-}
+export const getUserId = async (token: string) => {
+    const id = decodeToken(token);
+    return id;
+};
